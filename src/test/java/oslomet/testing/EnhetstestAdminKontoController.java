@@ -17,6 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -57,7 +58,7 @@ public class EnhetstestAdminKontoController {
     }
 
     @Test
-    public void test_hentAlleKontiIkkeLoggetinn() {
+    public void test_hentAlleKontiIkkeLoggetinn(){
 
         when(sjekk.loggetInn()).thenReturn(null);
 
@@ -66,5 +67,31 @@ public class EnhetstestAdminKontoController {
 
         // assert
         assertNull(resultat);
+    }
+
+    @Test
+    public void test_RegistrerKontoLoggetinn(){
+
+        Konto nyKonto = new Konto();
+
+        when(sjekk.loggetInn()).thenReturn("1234567890");
+        Mockito.when(repository.registrerKonto(any(Konto.class))).thenReturn("Konto registrert");
+
+        String result = adminKontoController.registrerKonto(nyKonto);
+
+        assertEquals("Konto registrert", result);
+    }
+
+    @Test
+    public void test_RegistrerKontoIkkeLoggetinn(){
+
+        Konto nyKonto = new Konto();
+
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        String resultat = adminKontoController.registrerKonto(nyKonto);
+
+        assertEquals(resultat, "Ikke innlogget");
+
     }
 }
