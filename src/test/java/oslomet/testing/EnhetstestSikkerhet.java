@@ -54,11 +54,34 @@ public class EnhetstestSikkerhet {
     }
 
     @Test
-    public void testSjekklogginnOK(){
+    public void test_SjekklogginnOK(){
+
+        String personnummer = "12345678910";
+        String passord = "PassordSomErLov";
+
+        String result = sjekk.sjekkLoggInn(personnummer, passord);
+        //Må gå gjennom session.setAttribute som ikke går nå, må kanskje importere noe?
+        // evt om man må mocke en session?
+
+        assertEquals("OK", result);
     }
 
     @Test
-    public void testSjekklogginn_FeiliPersonnummerEllerPassord(){
+    public void test_Sjekklogginn_FeiliPersonnummerEllerPassord(){
+
+        String personnummer = "12345678910928362891";
+        String feilpassord = "SuperPassordSomErVeldigMyeLengreEnnDetSomErLov";
+
+        String result = sjekk.sjekkLoggInn(personnummer, feilpassord);
+
+        assertEquals("Feil i personnummer eller passord", result);
+
+        // org.opentest4j.AssertionFailedError: expected: <Feil i personnummer eller passord> but was: <Feil i personnummer>
+        //Expected :Feil i personnummer eller passord
+        //Actual   :Feil i personnummer
+
+        //Får denne feilmeldingen, må endres så unntaket nås.
+
     }
 
 }
