@@ -94,4 +94,30 @@ public class EnhetstestAdminKontoController {
         assertEquals(resultat, "Ikke innlogget");
 
     }
+
+    @Test
+    public void test_endreKontoLoggetinn(){
+
+        Konto nyEndreKonto = new Konto();
+
+        when(sjekk.loggetInn()).thenReturn("1234567890");
+        Mockito.when(repository.endreKonto(any(Konto.class))).thenReturn("Konto registrert");
+
+        String result = adminKontoController.endreKonto(nyEndreKonto);
+
+        assertEquals("Konto registrert", result);
+    }
+
+    @Test
+    public void test_endreKontoIkkeLoggetinn(){
+
+        Konto nyEndreKonto = new Konto();
+
+        when(sjekk.loggetInn()).thenReturn(null);
+
+        String resultat = adminKontoController.endreKonto(nyEndreKonto);
+
+        assertEquals(resultat, "Ikke innlogget");
+    }
+
 }
