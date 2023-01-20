@@ -26,7 +26,7 @@ public class EnhetstestSikkerhet {
 
     @InjectMocks
     //Denne skal testes
-    private Sikkerhet sikkerhet;
+    private Sikkerhet sjekk;
 
     @Mock
     //Denne skal Mock'es
@@ -34,10 +34,23 @@ public class EnhetstestSikkerhet {
 
     @Test
     public void test_Sjekklogginn_FeilPersonummer(){
+
+        String feilpersonnummerTest = "1234567891113";
+        String passord = "superpassord";
+
+        String result = sjekk.sjekkLoggInn(feilpersonnummerTest,passord);
+
+        assertEquals("Feil i personnummer", result);
     }
 
     @Test
     public void test_Sjekklogginn_FeilPassord(){
+        String personnummer = "12345678910";
+        String feilpassord = "SuperPassordSomErVeldigMyeLengreEnnDetSomErLov";
+
+        String result = sjekk.sjekkLoggInn(personnummer, feilpassord);
+
+        assertEquals("Feil i passord", result);
     }
 
     @Test
