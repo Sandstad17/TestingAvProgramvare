@@ -116,16 +116,16 @@ public class EnhetstestBankController {
 
         Konto enKonto = new Konto("233939393", "545454", 720, "Brukskonto", "NOK", listeTransaksjoner);
 
-        when(sjekk.loggetInn()).thenReturn("233939393");
+        when(sjekk.loggetInn()).thenReturn("393948429428");
 
-        Mockito.when(repository.hentTransaksjoner(anyString(),anyString(),anyString())).thenReturn(enKonto);
-
-
+        when(repository.hentTransaksjoner("233939393", "18.01.2023", "05.01.2023")).thenReturn(enKonto);
 
         // act
-        List <Transaksjon> resultat = bankController.hentTransaksjoner(anyString(), anyString(), anyString()))
+        Konto resultat = repository.hentTransaksjoner("233939393", "18.01.2023", "05.01.2023");
 
         // assert
+        assertEquals(resultat, enKonto);
+        assertEquals(resultat.getTransaksjoner(), listeTransaksjoner);
     }
 }
 
