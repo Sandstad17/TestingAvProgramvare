@@ -32,7 +32,7 @@ public class EnhetstestSikkerhet {
 
     @InjectMocks
     //Denne skal testes
-    private Sikkerhet sjekk;
+    private Sikkerhet sikkerhet;
 
     @Mock
     //Denne skal Mock'es
@@ -49,7 +49,7 @@ public class EnhetstestSikkerhet {
         String feilpersonnummerTest = "1234567891113";
         String passord = "superpassord";
 
-        String result = sjekk.sjekkLoggInn(feilpersonnummerTest,passord);
+        String result = sikkerhet.sjekkLoggInn(feilpersonnummerTest,passord);
 
         assertEquals("Feil i personnummer", result);
     }
@@ -59,7 +59,7 @@ public class EnhetstestSikkerhet {
         String personnummer = "12345678910";
         String feilpassord = "SuperPassordSomErVeldigMyeLengreEnnDetSomErLov";
 
-        String result = sjekk.sjekkLoggInn(personnummer, feilpassord);
+        String result = sikkerhet.sjekkLoggInn(personnummer, feilpassord);
 
         assertEquals("Feil i passord", result);
     }
@@ -67,10 +67,15 @@ public class EnhetstestSikkerhet {
     @Test
     public void test_SjekklogginnOK(){
 
+        String personnummer = "12345678901";
+        String passord = "PassordSomErLov";
+
+        session.setAttribute("Innlogget", personnummer);
+
         Map<String,Object> attributes = new HashMap<String,Object>();
 
         doAnswer(new Answer<Object>(){
-            @Override
+
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = (String) invocation.getArguments()[0];
                 return attributes.get(key);
@@ -78,7 +83,7 @@ public class EnhetstestSikkerhet {
         }).when(session).getAttribute(anyString());
 
         doAnswer(new Answer<Object>(){
-            @Override
+
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = (String) invocation.getArguments()[0];
                 Object value = invocation.getArguments()[1];
@@ -87,10 +92,11 @@ public class EnhetstestSikkerhet {
             }
         }).when(session).setAttribute(anyString(), any());
 
-        String personnummer = "12345678910";
-        String passord = "PassordSomErLov";
+        session.setAttribute("Innlogget","12345678901");
 
-        assertEquals("OK", sjekk.sjekkLoggInn(personnummer, passord));
+        String resultat = sikkerhet.loggetInn();
+
+        assertEquals("OK", resultat);
     }
 
     @Test
@@ -99,7 +105,7 @@ public class EnhetstestSikkerhet {
         String personnummer = "12345678910928362891";
         String feilpassord = "SuperPassordSomErVeldigMyeLengreEnnDetSomErLov";
 
-        String result = sjekk.sjekkLoggInn(personnummer, feilpassord);
+        String result = sikkerhet.sjekkLoggInn(personnummer, feilpassord);
 
         assertEquals("Feil i personnummer eller passord", result);
 
