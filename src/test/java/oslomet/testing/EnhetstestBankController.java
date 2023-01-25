@@ -4,11 +4,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import oslomet.testing.API.BankController;
 import oslomet.testing.DAL.BankRepository;
 import oslomet.testing.Models.Konto;
 import oslomet.testing.Models.Kunde;
+import oslomet.testing.Models.Transaksjon;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -99,6 +103,29 @@ public class EnhetstestBankController {
 
         // assert
         assertNull(resultat);
+    }
+
+    @Test
+    public void hentTransaksjoner_LoggetInn() {
+        // arrange
+        List<Transaksjon> listeTransaksjoner = new ArrayList<>();
+        Transaksjon transaksjon1 = new Transaksjon(983737, "8383728", 1000.00, "18.01.2023", "Transaksjon vellykket", "Vent", "393948429428");
+        Transaksjon transaksjon2 = new Transaksjon(983537, "8383728", 200.00, "05.01.2023", "Transaksjon vellykket", "Vent", "33838383237");
+        listeTransaksjoner.add(transaksjon1);
+        listeTransaksjoner.add(transaksjon2);
+
+        Konto enKonto = new Konto("233939393", "545454", 720, "Brukskonto", "NOK", listeTransaksjoner);
+
+        when(sjekk.loggetInn()).thenReturn("233939393");
+
+        Mockito.when(repository.hentTransaksjoner(anyString(),anyString(),anyString())).thenReturn(enKonto);
+
+
+
+        // act
+        List <Transaksjon> resultat = bankController.hentTransaksjoner(anyString(), anyString(), anyString()))
+
+        // assert
     }
 }
 

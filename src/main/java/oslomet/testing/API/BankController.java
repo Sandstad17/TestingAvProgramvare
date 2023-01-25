@@ -32,7 +32,7 @@ public class BankController {
     }
 
     @GetMapping("/hentKonti")
-    public List<Konto> hentKonti() {
+    public List<Konto> hentKonti() { //SKREVET
         String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
             return repository.hentKonti(personnummer);
@@ -79,7 +79,7 @@ public class BankController {
     }
 
     @GetMapping("/hentKundeInfo")
-    public Kunde hentKundeInfo() {
+    public Kunde hentKundeInfo() { //SKREVET
         String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
             Kunde kunde = repository.hentKundeInfo(personnummer);
