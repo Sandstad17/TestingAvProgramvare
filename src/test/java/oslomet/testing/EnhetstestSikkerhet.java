@@ -5,20 +5,26 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import oslomet.testing.API.AdminKontoController;
 import oslomet.testing.DAL.AdminRepository;
 import oslomet.testing.DAL.BankRepository;
 import oslomet.testing.Models.Konto;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -31,6 +37,11 @@ public class EnhetstestSikkerhet {
     @Mock
     //Denne skal Mock'es
     private BankRepository bankrepository;
+
+    @Mock
+    //denne skal mocke´s
+    private HttpSession session;
+
 
     @Test
     public void test_Sjekklogginn_FeilPersonummer(){
@@ -56,14 +67,30 @@ public class EnhetstestSikkerhet {
     @Test
     public void test_SjekklogginnOK(){
 
+        Map<String,Object> attributes = new HashMap<String,Object>();
+
+        doAnswer(new Answer<Object>(){
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                String key = (String) invocation.getArguments()[0];
+                return attributes.get(key);
+            }
+        }).when(session).getAttribute(anyString());
+
+        doAnswer(new Answer<Object>(){
+            @Override
+            public Object answer(InvocationOnMock invocation) throws Throwable {
+                String key = (String) invocation.getArguments()[0];
+                Object value = invocation.getArguments()[1];
+                attributes.put(key, value);
+                return null;
+            }
+        }).when(session).setAttribute(anyString(), any());
+
         String personnummer = "12345678910";
         String passord = "PassordSomErLov";
 
-        String result = sjekk.sjekkLoggInn(personnummer, passord);
-        //Må gå gjennom session.setAttribute som ikke går nå, må kanskje importere noe?
-        // evt om man må mocke en session?
-
-        assertEquals("OK", result);
+        assertEquals("OK", sjekk.sjekkLoggInn(personnummer, passord));
     }
 
     @Test
