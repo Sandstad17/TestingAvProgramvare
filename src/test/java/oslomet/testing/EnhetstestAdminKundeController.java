@@ -22,6 +22,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class EnhetstestAdminKundeController {
 
+    private static final String code ="Test";
     @InjectMocks
     // Denne skal testes
     private AdminKundeController adminKundeController;
@@ -31,6 +32,8 @@ public class EnhetstestAdminKundeController {
 
     @Mock
     private Sikkerhet sjekk;
+
+
 
     @Test
     public void test_hentAlleOk(){
@@ -54,7 +57,7 @@ public class EnhetstestAdminKundeController {
     @Test
     public void test_hentAlleFeil(){
         // arrage
-        Mockito.when(repository.hentAlleKunder()).thenReturn(null);
+        //Mockito.when(repository.hentAlleKunder()).thenReturn(null);
 
         // act
         List<Kunde> resultat = adminKundeController.hentAlle();
@@ -85,7 +88,7 @@ public class EnhetstestAdminKundeController {
         Kunde kunde3 = new Kunde("26040187129", "Erik", "Olsen", "veien", "1234", "Oslo",
                 "12345678", "Passord");
 
-        Mockito.when(repository.registrerKunde(kunde3)).thenReturn("Ikke logget inn"); //?
+        //Mockito.when(repository.registrerKunde(kunde3)).thenReturn("Ikke logget inn"); //?
 
         String resultat = adminKundeController.lagreKunde(kunde3);
 
@@ -109,7 +112,7 @@ public class EnhetstestAdminKundeController {
         Kunde kunde4 = new Kunde("123456 12345", "Erik", "Anderse ", "veien", "1234", "Oslo",
                 "12345678", "heiheihei");
 
-        Mockito.when(repository.endreKundeInfo(any(Kunde.class))).thenReturn("Ikke logget inn");
+        //Mockito.when(repository.endreKundeInfo(any(Kunde.class))).thenReturn("Ikke logget inn");
 
         String restulat = adminKundeController.endre(kunde4);
         assertEquals("Ikke logget inn", restulat);
@@ -127,7 +130,7 @@ public class EnhetstestAdminKundeController {
     @Test
     public void test_slettFeil(){
         // metode 4 feil
-        Mockito.when(repository.slettKunde(anyString())).thenReturn("Feil");
+        //Mockito.when(repository.slettKunde(anyString())).thenReturn("Feil");
 
         String resultat = adminKundeController.slett("01010110523");
         assertEquals("Ikke logget inn", resultat);
