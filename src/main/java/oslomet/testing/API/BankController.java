@@ -41,7 +41,7 @@ public class BankController {
     }
 
     @GetMapping("/hentSaldi")
-    public List<Konto> hentSaldi() {
+    public List<Konto> hentSaldi() { //SKREVET
         String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
             return repository.hentSaldi(personnummer);
@@ -49,7 +49,7 @@ public class BankController {
         return null;
     }
 
-    @PostMapping("/registrerBetaling")
+    @PostMapping("/registrerBetaling") //SKREVET
     public String registrerBetaling(@RequestBody Transaksjon betaling) {
         String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
@@ -59,7 +59,7 @@ public class BankController {
     }
 
     @GetMapping("/hentBetalinger")
-    public List<Transaksjon> hentBetalinger() {
+    public List<Transaksjon> hentBetalinger() { //SKREVET
         String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
             return repository.hentBetalinger(personnummer);
@@ -68,7 +68,7 @@ public class BankController {
     }
 
     @GetMapping("/utforBetaling")
-    public List<Transaksjon> utforBetaling(int txID) {
+    public List<Transaksjon> utforBetaling(int txID) { //SKREVET
         String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
             if (repository.utforBetaling(txID).equals("OK")) {
@@ -88,7 +88,7 @@ public class BankController {
         return null;
     }
 
-    @PostMapping("/endreKundeInfo")
+    @PostMapping("/endreKundeInfo") //SKREVET
     public String endre(Kunde innKunde) {
         String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
