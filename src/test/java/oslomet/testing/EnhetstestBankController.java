@@ -239,7 +239,7 @@ public class EnhetstestBankController {
     public void utforBetaling_IkkeLoggetInn() {
         when(sjekk.loggetInn()).thenReturn(null);
 
-        List <Transaksjon> resultat = bankController.hentBetalinger();
+        List <Transaksjon> resultat = bankController.utforBetaling(2939330);
 
         assertNull(resultat);
     }
