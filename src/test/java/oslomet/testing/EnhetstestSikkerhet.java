@@ -24,8 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EnhetstestSikkerhet {
@@ -65,25 +64,25 @@ public class EnhetstestSikkerhet {
     }
 
     @Test
-    public void test_SjekklogginnOK(){
+    public void test_SjekklogginnOK() {
 
         String personnummer = "12345678901";
         String passord = "PassordSomErLov";
 
         session.setAttribute("Innlogget", personnummer);
 
-        Map<String,Object> attributes = new HashMap<String,Object>();
+        Map<String, Object> attributes = new HashMap<String, Object>();
 
-        doAnswer(new Answer<Object>(){
-
+        doAnswer(new Answer<Object>() {
+            @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = (String) invocation.getArguments()[0];
                 return attributes.get(key);
             }
         }).when(session).getAttribute(anyString());
 
-        doAnswer(new Answer<Object>(){
-
+        doAnswer(new Answer<Object>() {
+            @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
                 String key = (String) invocation.getArguments()[0];
                 Object value = invocation.getArguments()[1];
@@ -94,7 +93,9 @@ public class EnhetstestSikkerhet {
 
         session.setAttribute("Innlogget","12345678901");
 
-        String resultat = sikkerhet.loggetInn();
+        when(sikkerhet.sjekkLoggInn(anyString(),anyString())).thenReturn("OK");
+
+        String resultat = sikkerhet.sjekkLoggInn(personnummer,passord);
 
         assertEquals("OK", resultat);
     }
