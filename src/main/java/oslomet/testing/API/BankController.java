@@ -23,7 +23,7 @@ public class BankController {
     Sikkerhet sjekk;
 
     @GetMapping("/hentTransaksjoner")
-    public Konto hentTransaksjoner(String kontoNr, String fraDato, String tilDato) {
+    public Konto hentTransaksjoner(String kontoNr, String fraDato, String tilDato) { //SKREVET
          String personnummer = sjekk.loggetInn();
         if (personnummer!=null) {
             return repository.hentTransaksjoner(kontoNr, fraDato, tilDato);
