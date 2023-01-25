@@ -121,7 +121,7 @@ public class EnhetstestBankController {
         when(repository.hentTransaksjoner(anyString(),anyString(), anyString())).thenReturn(enKonto);
 
         // act
-        Konto resultat = repository.hentTransaksjoner(anyString(),anyString(), anyString());
+        Konto resultat = repository.hentTransaksjoner("545454", "12.01.2020", "25.01.2023");
 
         // assert
         assertEquals(resultat, enKonto);
