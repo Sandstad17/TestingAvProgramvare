@@ -230,7 +230,7 @@ public class EnhetstestBankController {
 
         Mockito.when(repository.hentBetalinger(anyString())).thenReturn(listeTransaksjoner);
 
-        List <Transaksjon> resultat = bankController.hentBetalinger();
+        List <Transaksjon> resultat = bankController.utforBetaling(383838383);
 
         assertEquals(listeTransaksjoner, resultat);
     }
