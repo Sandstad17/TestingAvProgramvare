@@ -23,14 +23,6 @@ public class BankController {
     @Autowired
     Sikkerhet sjekk;
 
-    @Autowired
-    private DataSource dataSource;
-
-    @GetMapping("/initDB")
-    public String initDB(){
-        return repository.initDB(dataSource);
-    }
-
 
     @GetMapping("/hentTransaksjoner")
     public Konto hentTransaksjoner(String kontoNr, String fraDato, String tilDato) { //SKREVET
@@ -106,5 +98,13 @@ public class BankController {
                 return repository.endreKundeInfo(innKunde);
             }
         return null;
+    }
+
+    @Autowired
+    private DataSource dataSource;
+
+    @GetMapping("/initDB")
+    public String initDB(){
+        return repository.initDB(dataSource);
     }
 }
