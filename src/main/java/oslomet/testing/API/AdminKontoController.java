@@ -6,6 +6,7 @@ import oslomet.testing.DAL.AdminRepository;
 import oslomet.testing.Models.Konto;
 import oslomet.testing.Sikkerhet.Sikkerhet;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @RestController

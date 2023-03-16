@@ -10,6 +10,8 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @RestController
+
+
 @RequestMapping("/adminKunde")
 public class AdminKundeController {
     @Autowired
@@ -17,6 +19,7 @@ public class AdminKundeController {
 
     @Autowired
     private Sikkerhet sjekk;
+
 
     @GetMapping("/hentAlle")
     public List<Kunde> hentAlle() {
@@ -53,6 +56,8 @@ public class AdminKundeController {
         }
         return "Ikke logget inn";
     }
+
+
 }
 
 
